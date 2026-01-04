@@ -16,7 +16,7 @@ from .unitree_go2_stairs_env_cfg import UnitreeGo2StairsEnvCfg
 
 import gymnasium as gym
 import torch
-from isaaclab.sensors import ContactSensor
+from isaaclab.sensors import ContactSensor, RayCaster
 
 from isaaclab.markers import VisualizationMarkers, VisualizationMarkersCfg
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
@@ -83,6 +83,8 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
         self.cfg.terrain.num_envs = self.scene.cfg.num_envs
         self.cfg.terrain.env_spacing = self.scene.cfg.env_spacing
         self._terrain = self.cfg.terrain.class_type(self.cfg.terrain)
+        self._height_scanner = RayCaster(self.cfg.height_scanner)
+        self.scene.sensors["height_scanner"] = self._height_scanner
 
         # clone and replicate
         self.scene.clone_environments(copy_from_source=False)
@@ -169,6 +171,9 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
         #Obs space is Linear velocity (3), Angular velocity (3), 
         #projected gravity/easy way in sim for orientation(3), target velocity(3),
         #Joint movement (12), Joint velocity (12), Action(12) = 48
+        height_data = (
+                self._height_scanner.data.pos_w[:, 2].unsqueeze(1) - self._height_scanner.data.ray_hits_w[..., 2] - 0.5
+            ).clip(-1.0, 1.0)
         obs = torch.cat(
             [
                 tensor
@@ -179,6 +184,7 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
                     self._commands,
                     self._robot.data.joint_pos - self._robot.data.default_joint_pos,
                     self._robot.data.joint_vel,
+                    height_data,
                     self._actions,
                 )
                 if tensor is not None

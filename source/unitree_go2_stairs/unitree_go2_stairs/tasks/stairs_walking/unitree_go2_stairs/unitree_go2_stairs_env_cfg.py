@@ -65,10 +65,10 @@ STAIRS_TERRAIN_CFG = TerrainGeneratorCfg(
 class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     # env
     decimation = 4
-    episode_length_s = 15.0
+    episode_length_s = 20.0
     # - spaces definition
     action_space = 12
-    observation_space = 48 #235
+    observation_space = 235 #48 #235
     state_space = 0
 
     sim: SimulationCfg = SimulationCfg(
@@ -111,7 +111,7 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
         ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.1, size=[1.6, 1.0]),
-        debug_vis=False,
+        debug_vis=True,
         mesh_prim_paths=["/World/ground"],
     )
     # Contact sensors for feet (basic)
@@ -126,7 +126,7 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     #events: EventCfg = EventCfg()
     
     # scene
-    scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=4096, env_spacing=2.0, replicate_physics=True)
+    scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=1024, env_spacing=2.0, replicate_physics=True)
 
     # custom parameters/scales
 
@@ -135,7 +135,19 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
 
     # reset joint noise:
 
-    lin_vel_reward_scale = 1.50
+    # lin_vel_reward_scale = 1.250
+    # yaw_rate_reward_scale = 0.5
+    # z_vel_reward_scale = -1.750
+    # ang_vel_reward_scale = -0.05
+    # joint_torque_reward_scale = -2.5e-5
+    # joint_accel_reward_scale = -2.5e-7
+    # action_rate_reward_scale = -0.01
+    # feet_air_time_reward_scale = 1.0
+    # undesired_contact_reward_scale = -1.0
+    # flat_orientation_reward_scale = -4.0
+    flat_orientation_reward_scale = -0.0
+
+    lin_vel_reward_scale = 1.750
     yaw_rate_reward_scale = 0.5
     z_vel_reward_scale = -1.0
     ang_vel_reward_scale = -0.05
@@ -143,5 +155,4 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     joint_accel_reward_scale = -2.5e-7
     action_rate_reward_scale = -0.01
     feet_air_time_reward_scale = 1.5
-    undesired_contact_reward_scale = -2.0
-    flat_orientation_reward_scale = -4.0
+    undesired_contact_reward_scale = -3.0
