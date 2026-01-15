@@ -28,32 +28,32 @@ STAIRS_TERRAIN_CFG = TerrainGeneratorCfg(
     use_cache=False,
     sub_terrains={
         "pyramid_stairs": terrain_gen.MeshPyramidStairsTerrainCfg(
-            proportion=0.5,
-            step_height_range=(0.05, 0.23),
+            proportion=1.0,
+            step_height_range=(0.02, 0.2),
             step_width=0.3,
             platform_width=3.0,
             border_width=1.0,
             holes=False,
         ),
         "pyramid_stairs_inv": terrain_gen.MeshInvertedPyramidStairsTerrainCfg(
-            proportion=0.5,
-            step_height_range=(0.05, 0.23),
+            proportion=0.0,
+            step_height_range=(0.02, 0.2),
             step_width=0.3,
             platform_width=3.0,
             border_width=1.0,
             holes=False,
         ),
-        #"boxes": terrain_gen.MeshRandomGridTerrainCfg(
-        #     proportion=0.2, grid_width=0.45, grid_height_range=(0.05, 0.2), platform_width=2.0
+        # "boxes": terrain_gen.MeshRandomGridTerrainCfg(
+        #     proportion=0.1, grid_width=0.45, grid_height_range=(0.05, 0.2), platform_width=2.0
         # ),
         # "random_rough": terrain_gen.HfRandomUniformTerrainCfg(
-        #     proportion=0.2, noise_range=(0.02, 0.10), noise_step=0.02, border_width=0.25
+        #     proportion=0.1, noise_range=(0.02, 0.10), noise_step=0.02, border_width=0.25
         # ),
         # "hf_pyramid_slope": terrain_gen.HfPyramidSlopedTerrainCfg(
-        #     proportion=0.1, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
+        #     proportion=0.05, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
         # ),
         # "hf_pyramid_slope_inv": terrain_gen.HfInvertedPyramidSlopedTerrainCfg(
-        #     proportion=0.1, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
+        #     proportion=0.05, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
         # ),
     },
 )
@@ -126,7 +126,7 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     #events: EventCfg = EventCfg()
     
     # scene
-    scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=1024, env_spacing=2.0, replicate_physics=True)
+    scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=2048, env_spacing=2.0, replicate_physics=True)
 
     # custom parameters/scales
 
@@ -134,19 +134,6 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     action_scale = 0.5
 
     # reset joint noise:
-
-    # lin_vel_reward_scale = 1.250
-    # yaw_rate_reward_scale = 0.5
-    # z_vel_reward_scale = -1.750
-    # ang_vel_reward_scale = -0.05
-    # joint_torque_reward_scale = -2.5e-5
-    # joint_accel_reward_scale = -2.5e-7
-    # action_rate_reward_scale = -0.01
-    # feet_air_time_reward_scale = 1.0
-    # undesired_contact_reward_scale = -1.0
-    # flat_orientation_reward_scale = -4.0
-    flat_orientation_reward_scale = -0.0
-
     lin_vel_reward_scale = 1.750
     yaw_rate_reward_scale = 0.5
     z_vel_reward_scale = -1.0
@@ -155,4 +142,17 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     joint_accel_reward_scale = -2.5e-7
     action_rate_reward_scale = -0.01
     feet_air_time_reward_scale = 1.5
-    undesired_contact_reward_scale = -3.0
+    undesired_contact_reward_scale = -2.0
+    flat_orientation_reward_scale = -4.0
+
+    flat_orientation_reward_scale = -0.0
+
+    # lin_vel_reward_scale = 1.750
+    # yaw_rate_reward_scale = 0.5
+    # z_vel_reward_scale = -1.70
+    # ang_vel_reward_scale = -0.05
+    # joint_torque_reward_scale = -2.5e-5
+    # joint_accel_reward_scale = -2.5e-7
+    # action_rate_reward_scale = -0.005
+    # feet_air_time_reward_scale = 0.750
+    # undesired_contact_reward_scale = -1.50

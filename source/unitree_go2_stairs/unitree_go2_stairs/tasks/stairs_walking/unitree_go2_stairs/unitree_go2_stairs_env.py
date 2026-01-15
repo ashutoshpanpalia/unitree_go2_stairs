@@ -172,7 +172,7 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
         #projected gravity/easy way in sim for orientation(3), target velocity(3),
         #Joint movement (12), Joint velocity (12), Action(12) = 48
         height_data = (
-                self._height_scanner.data.pos_w[:, 2].unsqueeze(1) - self._height_scanner.data.ray_hits_w[..., 2] - 0.5
+                self._height_scanner.data.pos_w[:, 2].unsqueeze(1) - self._height_scanner.data.ray_hits_w[..., 2] - 0.4
             ).clip(-1.0, 1.0)
         obs = torch.cat(
             [
@@ -192,6 +192,15 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
             dim=-1,
         )
         observations = {"policy": obs}
+
+        #Testing out height scanner data as training is not learning properly
+        # scanner_z = self._height_scanner.data.pos_w[:, 2]
+        # ground_z = self._height_scanner.data.ray_hits_w[:, :, 2].mean(dim=1)  # Average across rays
+        # standing_height = (scanner_z - ground_z).mean()
+        # print(f"Average standing height: {standing_height:.3f}m")
+
+
+
         return observations
 
     def _get_rewards(self) -> torch.Tensor:
@@ -232,7 +241,7 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
         # Encourage more feet air time, and more than 0.5 sec is better less thanthat is penalized
         first_contact = self._contact_sensor.compute_first_contact(self.step_dt)[:, self._feet_ids]
         last_air_time = self._contact_sensor.data.last_air_time[:, self._feet_ids]
-        air_time = torch.sum((last_air_time - 0.5) * first_contact, dim=1) * (
+        air_time = torch.sum((last_air_time - 0.75) * first_contact, dim=1) * (
             torch.norm(self._commands[:, :2], dim=1) > 0.1
         )
 
@@ -294,11 +303,12 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
         self._commands[env_ids] = torch.zeros_like(self._commands[env_ids]).uniform_(-1.0, 1.0)
         
         #Modifying just for video move Vx=1
-        # self._commands[env_ids] = 0.0
-        # self._commands[env_ids, 0] = 1.0 
+        self._commands[env_ids] = 0.0
+        self._commands[env_ids, 0] = 1.0 
         
         #Making the Yaw target to be zero to start learning to walk basic.
-        self._commands[env_ids, 2] = 0.0
+        # self._commands[env_ids, 2] = 0.0
+        # self._commands[env_ids, 1] = 0.0
 
         #Since the robot has learned to to basic locomotion lets add yaw also
 
