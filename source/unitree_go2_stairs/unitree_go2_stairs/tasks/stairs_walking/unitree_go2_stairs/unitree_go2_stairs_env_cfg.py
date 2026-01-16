@@ -28,18 +28,18 @@ STAIRS_TERRAIN_CFG = TerrainGeneratorCfg(
     use_cache=False,
     sub_terrains={
         "pyramid_stairs": terrain_gen.MeshPyramidStairsTerrainCfg(
-            proportion=1.0,
-            step_height_range=(0.02, 0.2),
+            proportion=0.50,
+            step_height_range=(0.02, 0.1),
             step_width=0.3,
-            platform_width=3.0,
+            platform_width=1.50,
             border_width=1.0,
             holes=False,
         ),
         "pyramid_stairs_inv": terrain_gen.MeshInvertedPyramidStairsTerrainCfg(
-            proportion=0.0,
-            step_height_range=(0.02, 0.2),
+            proportion=0.50,
+            step_height_range=(0.02, 0.1),
             step_width=0.3,
-            platform_width=3.0,
+            platform_width=1.50,
             border_width=1.0,
             holes=False,
         ),
@@ -111,7 +111,7 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
         ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.1, size=[1.6, 1.0]),
-        debug_vis=True,
+        debug_vis=False,
         mesh_prim_paths=["/World/ground"],
     )
     # Contact sensors for feet (basic)
@@ -126,7 +126,7 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     #events: EventCfg = EventCfg()
     
     # scene
-    scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=2048, env_spacing=2.0, replicate_physics=True)
+    scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=4096, env_spacing=2.0, replicate_physics=True)
 
     # custom parameters/scales
 
@@ -134,16 +134,16 @@ class UnitreeGo2StairsEnvCfg(DirectRLEnvCfg):
     action_scale = 0.5
 
     # reset joint noise:
-    lin_vel_reward_scale = 1.750
-    yaw_rate_reward_scale = 0.5
-    z_vel_reward_scale = -1.0
-    ang_vel_reward_scale = -0.05
-    joint_torque_reward_scale = -2.5e-5
+    lin_vel_reward_scale = 2.750
+    yaw_rate_reward_scale = 0.75
+    z_vel_reward_scale = -2.0
+    ang_vel_reward_scale = -0.1
+    joint_torque_reward_scale = -2.5e-6
     joint_accel_reward_scale = -2.5e-7
-    action_rate_reward_scale = -0.01
-    feet_air_time_reward_scale = 1.5
+    action_rate_reward_scale = -0.005
+    feet_air_time_reward_scale = 1.0
     undesired_contact_reward_scale = -2.0
-    flat_orientation_reward_scale = -4.0
+    # flat_orientation_reward_scale = -4.0
 
     flat_orientation_reward_scale = -0.0
 

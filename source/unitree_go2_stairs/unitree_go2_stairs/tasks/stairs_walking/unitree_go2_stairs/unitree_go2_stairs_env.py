@@ -303,11 +303,11 @@ class UnitreeGo2StairsEnv(DirectRLEnv):
         self._commands[env_ids] = torch.zeros_like(self._commands[env_ids]).uniform_(-1.0, 1.0)
         
         #Modifying just for video move Vx=1
-        self._commands[env_ids] = 0.0
-        self._commands[env_ids, 0] = 1.0 
+        # self._commands[env_ids] = 0.0
+        # self._commands[env_ids, 0] = 1.0 
         
         #Making the Yaw target to be zero to start learning to walk basic.
-        # self._commands[env_ids, 2] = 0.0
+        self._commands[env_ids, 2] = 0.0
         # self._commands[env_ids, 1] = 0.0
 
         #Since the robot has learned to to basic locomotion lets add yaw also
