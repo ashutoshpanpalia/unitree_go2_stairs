@@ -43,6 +43,7 @@ STAIRS_TERRAIN_CFG = TerrainGeneratorCfg(
             border_width=1.0,
             holes=False,
         ),
+
         # "boxes": terrain_gen.MeshRandomGridTerrainCfg(
         #     proportion=0.1, grid_width=0.45, grid_height_range=(0.05, 0.2), platform_width=2.0
         # ),
@@ -50,10 +51,10 @@ STAIRS_TERRAIN_CFG = TerrainGeneratorCfg(
         #     proportion=0.1, noise_range=(0.02, 0.10), noise_step=0.02, border_width=0.25
         # ),
         # "hf_pyramid_slope": terrain_gen.HfPyramidSlopedTerrainCfg(
-        #     proportion=0.05, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
+        #     proportion=0.1, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
         # ),
         # "hf_pyramid_slope_inv": terrain_gen.HfInvertedPyramidSlopedTerrainCfg(
-        #     proportion=0.05, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
+        #     proportion=0.1, slope_range=(0.0, 0.4), platform_width=2.0, border_width=0.25
         # ),
     },
 )

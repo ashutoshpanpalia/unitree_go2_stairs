@@ -1,3 +1,7 @@
+C:\Users\ashutosh\Desktop\isaac_lab\unitree_go2_stairs\unitree_go2_stairs>python scripts\rsl_rl\play.py --task  Template-Go2-stairs-v0 --num_envs=2048 --checkpoint="C:\Users\ashutosh\Desktop\isaac_lab\unitree_go2_stairs\unitree_go2_stairs\logs\rsl_rl\unitree_stairs_rsl_rl\2026-01-14_22-38-19\model_4999.pt"
+
+To run the successfully trained Robot climbing stairs model
+
 # Template for Isaac Lab Projects
 
 ## Overview
